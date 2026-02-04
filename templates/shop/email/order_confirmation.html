@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmed | E-Shop</title>
+</head>
+<body style="margin:0; padding:0; background-color:#f4f6f8; font-family:Arial, Helvetica, sans-serif;">
+
+<table width="100%" cellpadding="0" cellspacing="0" style="background-color:#f4f6f8; padding:20px 0;">
+    <tr>
+        <td align="center">
+            <!-- Main container -->
+            <table width="600" cellpadding="0" cellspacing="0" style="background:#ffffff; border-radius:8px; overflow:hidden; box-shadow:0 5px 20px rgba(0,0,0,0.08);">
+                
+                <!-- Header -->
+                <tr>
+                    <td style="background:linear-gradient(135deg,#007bff,#0056b3); padding:25px; text-align:center;">
+                        <h1 style="margin:0; color:#ffffff; font-size:26px; letter-spacing:1px;">
+                            E-Shop
+                        </h1>
+                        <p style="margin:8px 0 0; color:#e9f2ff; font-size:14px;">
+                            Premium Online Shopping Experience
+                        </p>
+                    </td>
+                </tr>
+
+                <!-- Content -->
+                <tr>
+                    <td style="padding:30px;">
+                        <h2 style="margin-top:0; color:#333;">
+                            Order Confirmed 🎉
+                        </h2>
+
+                        <p style="color:#555; font-size:15px;">
+                            Hi <strong>{{ order.first_name }}</strong>,
+                        </p>
+
+                        <p style="color:#555; font-size:15px;">
+                            Thank you for your purchase! Your order has been successfully placed and is now being processed.
+                        </p>
+
+                        <!-- Order info -->
+                        <table width="100%" cellpadding="0" cellspacing="0" style="margin:20px 0; font-size:14px;">
+                            <tr>
+                                <td style="padding:6px 0;"><strong>Order ID:</strong></td>
+                                <td style="padding:6px 0; text-align:right;">#{{ order.id }}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding:6px 0;"><strong>Order Date:</strong></td>
+                                <td style="padding:6px 0; text-align:right;">{{ order.created_at|date:"F d, Y H:i" }}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding:6px 0;"><strong>Payment Status:</strong></td>
+                                <td style="padding:6px 0; text-align:right; color:#28a745;"><strong>Paid</strong></td>
+                            </tr>
+                            <tr>
+                                <td style="padding:6px 0;"><strong>Transaction ID:</strong></td>
+                                <td style="padding:6px 0; text-align:right;">{{ order.transaction_id }}</td>
+                            </tr>
+                        </table>
+
+                        <!-- Items table -->
+                        <h3 style="color:#007bff; margin-bottom:10px;">Order Summary</h3>
+
+                        <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse; font-size:14px;">
+                            <thead>
+                                <tr style="background:#f1f3f5;">
+                                    <th align="left" style="padding:10px; border-bottom:1px solid #ddd;">Product</th>
+                                    <th align="center" style="padding:10px; border-bottom:1px solid #ddd;">Qty</th>
+                                    <th align="right" style="padding:10px; border-bottom:1px solid #ddd;">Price</th>
+                                    <th align="right" style="padding:10px; border-bottom:1px solid #ddd;">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in order.order_items.all %}
+                                <tr>
+                                    <td style="padding:10px; border-bottom:1px solid #eee;">{{ item.product.name }}</td>
+                                    <td align="center" style="padding:10px; border-bottom:1px solid #eee;">{{ item.quantity }}</td>
+                                    <td align="right" style="padding:10px; border-bottom:1px solid #eee;">৳{{ item.price }}</td>
+                                    <td align="right" style="padding:10px; border-bottom:1px solid #eee;">৳{{ item.get_cost }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+
+                        <!-- Total -->
+                        <table width="100%" cellpadding="0" cellspacing="0" style="margin-top:15px;">
+                            <tr>
+                                <td style="text-align:right; font-size:16px;">
+                                    <strong>Total:</strong>
+                                    <span style="color:#007bff; font-size:18px;">৳{{ order.get_total_cost }}</span>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <!-- Shipping -->
+                        <h3 style="color:#007bff; margin-top:30px;">Shipping Information</h3>
+                        <p style="color:#555; font-size:14px; line-height:1.6;">
+                            {{ order.first_name }} {{ order.last_name }}<br>
+                            {{ order.address }}<br>
+                            {{ order.city }}, {{ order.postal_code }}
+                        </p>
+
+                        <p style="color:#555; font-size:14px;">
+                            You’ll receive another email once your order has been shipped.
+                        </p>
+
+                        <p style="color:#555; font-size:14px;">
+                            Thank you for choosing <strong>E-Shop</strong> ❤️
+                        </p>
+                    </td>
+                </tr>
+
+                <!-- Footer -->
+                <tr>
+                    <td style="background:#f8f9fa; padding:20px; text-align:center; font-size:12px; color:#777;">
+                        <p style="margin:0;">© 2025 E-Shop. All rights reserved.</p>
+                        <p style="margin:5px 0 0;">This email was sent to {{ order.email }}</p>
+                    </td>
+                </tr>
+
+            </table>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>
